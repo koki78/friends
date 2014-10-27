@@ -25,14 +25,16 @@ $dbh->query('SET NAMES utf8');
 //$sql = SELECT area_table.group,area_table.gender_type, COUNT(friends_tabele.gender)AS count_genderFROM (SELECT *,'男'ASgender_typeFROM area_table UNION SELECT *,'女'FROMarea_table)area_table LEFT OUTER JOIN friends_tabeleONfriends_tabele.area_table_id = area_table.id AND friends_tabele.gender = area_table.gender_type GROUP by area_table.gender_type,area_table.groupORDER BY area_table.id
 
 
-
 //2.sqlで指令を出す
 //$sql = 'SELECT * FROM area_table WHERE1';
-$sql_friends = 'SELECT `area_table`.`name`,COUNT(`friends_tabele`.`area_table_id`)AS `counter_area` FROM `area_table` LEFT OUTER JOIN `friends_tabele` ON `friends_tabele`.`area_table_id` = `area_table`.`id` GROUP by `area_table`.`name`,ORDER BY `area_table`.`id`
-$stmt = $dbh->prepare($sql);
+$sql_friends = 'SELECT `area_table`.`name`,`area_table_id`.`id`,COUNT(`friends_tabele`.`area_table_id`)AS `counter_area_table`';
+$sql_friends .= ' FROM `area_table` LEFT OUTER JOIN `friends_tabele` ON `friends_tabele`.`area_table_id` = `area_table`.`id`';
+$sql_friends .= ' GROUP by `area_table`.`name` ORDER BY `area_table`.`id`';
+$stmt = $dbh->prepare($sql_friends);
 $stmt->execute();
 
 echo '<table>';
+//echo $sql_friends;
 
 while(1)
 {
@@ -44,14 +46,14 @@ while(1)
 
 	echo '<tr>';
 	echo '<td>'.$rec['id'].'</td>';
-	echo '<td><a href="friends_list.php?id='.$rec['id'].'">'.$rec['name'].'</a></td>';
+	echo '<td><a href="friends_list.php?id='.$rec[`id`].'">'.$rec['name'].'</a></td>';
 	echo '<td>('.$rec_friends['counter_area_table'].')</td>';
 	echo '</tr>';
 
 }
 	echo '</table>';
 
-データベースから切断する
+//データベースから切断する
 $dbh = null;
 ?>
 

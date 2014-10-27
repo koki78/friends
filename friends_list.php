@@ -8,6 +8,7 @@ $dbh = new PDO($dsn,$user,$password);
 $dbh->query('SET NAMES utf8');
 ?>
 
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -20,9 +21,16 @@ $dbh->query('SET NAMES utf8');
 		$area_id = $_GET['id'];
 		//2.sqlで指令を出す
 		$sql = 'SELECT * FROM `friends_tabele` WHERE `area_table_id` = '.$area_id;
+		
 		$stmt = $dbh->prepare($sql);
-
 		$stmt->execute();
+
+		$sql_gender = 'SELECT * FROM `friends_tabele` WHERE `friends_tabele`.`gender`,COUNT(`friends_tabele`.`gender`)';
+        $sql_gender .= AS count_gender FROM (SELECT *,'男'AS gender_type FROM `friends_tabele` UNION SELECT *,'女'FROM `friends_tabele` area_table LEFT 
+
+        $stmt = $dbh->prepare($sql_gender);
+		$stmt->execute();
+
 
 	echo '<ul>';
    while(1){
