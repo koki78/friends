@@ -28,7 +28,7 @@ $dbh->query('SET NAMES utf8');
 
 //2.sqlで指令を出す
 //$sql = 'SELECT * FROM area_table WHERE1';
-$sql = 'SELECT area_table.group, COUNT(friends_tabele.group)AS count_gropeFROM area_table LEFT OUTER JOIN friends_tabeleONfriends_tabele.area_table_id = area_table.id AND friends_tabele.group = area_table.grope GROUP by area_table.grope,area_table.groupORDER BY area_table.id
+$sql_friends = 'SELECT `area_table`.`name`,COUNT(`friends_tabele`.`area_table_id`)AS `counter_area` FROM `area_table` LEFT OUTER JOIN `friends_tabele` ON `friends_tabele`.`area_table_id` = `area_table`.`id` GROUP by `area_table`.`name`,ORDER BY `area_table`.`id`
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 
@@ -45,12 +45,13 @@ while(1)
 	echo '<tr>';
 	echo '<td>'.$rec['id'].'</td>';
 	echo '<td><a href="friends_list.php?id='.$rec['id'].'">'.$rec['name'].'</a></td>';
+	echo '<td>('.$rec_friends['counter_area_table'].')</td>';
 	echo '</tr>';
 
 }
 	echo '</table>';
 
-//データベースから切断する
+データベースから切断する
 $dbh = null;
 ?>
 
